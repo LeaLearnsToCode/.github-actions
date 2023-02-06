@@ -53,4 +53,4 @@ jobs:
     with:
       template_repo: ${{ needs.get-template-repo.outputs.template_repo }}
     secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
+      token: ${{ secrets.WORKFLOW_TOKEN }}
