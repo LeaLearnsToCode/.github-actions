@@ -9,7 +9,7 @@
 #   - Push the branch to this repository
 #   - Create a pull request in this repository
 #
-name: [Base] Sync changes from template
+name: "[Base] Sync changes from template"
 
 # TODO:
 # - Switch to gh. Check https://github.com/cli/cli/issues/297 for updates

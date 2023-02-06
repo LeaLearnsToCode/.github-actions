@@ -1,5 +1,5 @@
 ---
-name: [Base] Lint Code Base
+name: "[Base] Lint Code Base"
 
 on:
   workflow_call:
