@@ -44,14 +44,14 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ inputs.template_repo }}
-          token: ${{ secrets.token }}
+          token: ${{ github.token }}
           path: ${{ inputs.template_repo }}
 
       - name: Check out ${{ github.repository }}
         uses: actions/checkout@v2
         with:
           repository: ${{ github.repository }}
-          token: ${{ github.token }}
+          token: ${{ secrets.token }}
           path: ${{ github.repository }}
       - name: Create branch in ${{ env.THIS_REPO }}
         run: |
@@ -99,7 +99,7 @@ jobs:
         continue-on-error: true
         if: steps.commit.outcome == 'success'
         env:
-          GITHUB_TOKEN: ${{ secrets.token }}
+          GITHUB_TOKEN: ${{ github.token }}
           GITHUB_USER: ${{ github.actor }}
         run: |
           pushd "${THIS_REPO}"
