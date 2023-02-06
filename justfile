@@ -1,5 +1,6 @@
 #!/usr/bin/env -S just --justfile
-
+# File is source from LeaLearnsToCode/base-repo-template
+# Do not modify
 set windows-shell := ["powershell.exe",  "-NoLogo", "-Command"]
 
 log := "warn"
@@ -15,3 +16,7 @@ super-linter:
     -v {{justfile_directory()}}:/tmp/lint \
     github/super-linter:v4
 
+# Local Variables:
+# mode: makefile
+# End:
+# vim: set ft=make :
