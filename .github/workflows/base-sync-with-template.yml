@@ -23,6 +23,10 @@ on:
       template_repo:
         type: string
         required: true
+      template_ref:
+        type: string
+        required: false
+        default: main
 
 env:
   BASE_BRANCH: main
@@ -41,14 +45,15 @@ jobs:
 
     steps:
       - name: Check out template repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: ${{ inputs.template_repo }}
+          ref: ${{ inputs.template_ref }}
           token: ${{ github.token }}
           path: ${{ inputs.template_repo }}
 
       - name: Check out ${{ github.repository }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: ${{ github.repository }}
           token: ${{ secrets.token }}
