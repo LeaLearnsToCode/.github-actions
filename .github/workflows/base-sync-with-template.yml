@@ -63,7 +63,7 @@ jobs:
 
       - name: Copy template contents
         run: |
-          _files="$(find "${REPO_TEMPLATE}" \
+          _files="$(find "${{ inputs.template_repo }}" \
             ! -path "*/.git/*" \
             ! -path "*/.github/workflows/*" \
             ! -name ".gitignore" \
@@ -72,7 +72,7 @@ jobs:
             -print)"
           for _file in ${_files}; do
             _src="${_file}"
-            _dst="${THIS_REPO}/${_file#${REPO_TEMPLATE}/}"
+            _dst="${THIS_REPO}/${_file#${{ inputs.template_repo }}/}"
             # TODO: Find a more robust / elegant way to get this :point_down:
             _dst="${_dst%/*}/"
             mkdir -p "${_dst}"
@@ -103,7 +103,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.token }}
           GITHUB_USER: ${{ github.actor }}
         run: |
-          pushd ${THIS_REPO}
+          pushd "${THIS_REPO}"
           hub pull-request \
             -b "${BASE_BRANCH}" \
             -h "${HEAD_BRANCH}" \
