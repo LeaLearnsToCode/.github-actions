@@ -24,10 +24,6 @@ on:
         type: string
         required: true
 
-permissions:
-  contents: write
-  pull-requests: write
-
 env:
   BASE_BRANCH: main
   HEAD_BRANCH: chore/sync-from-template
