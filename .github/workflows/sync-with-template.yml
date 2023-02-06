@@ -1,0 +1,62 @@
+---
+# File is source from LeaLearnsToCode/base-repo-template
+# Do not modify!
+# This file was adopted from
+# - Run this workflow to pull changes from the template repository.
+#
+#   - Clone this repository. Check out a branch
+#   - Copy files from the template onto this clone
+#   - Push the branch to this repository
+#   - Create a pull request in this repository
+#
+name: Sync changes from template
+
+# TODO:
+# - Switch to gh. Check https://github.com/cli/cli/issues/297 for updates
+
+on:
+  schedule:
+    - cron: "17 5 * * 5"
+  push:
+    paths:
+      - .github/workflows/sync-with-template.yml
+  workflow_call:
+    secrets:
+      token:
+        required: true
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  get-template-repo:
+    name: Load Template Repo Name
+    runs-on: ubuntu-latest
+    outputs:
+      template_repo: ${{ steps.template.outputs.template_repo }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Load .gitrepotemplate
+        id: template
+        run: |
+          echo "template_repo=$(cat .gitrepotemplate)" >> $GITHUB_OUTPUT
+
+  sync-from-template:
+    name: Sync changes from ${{ needs.get-template-repo.outputs.template_repo }}
+    needs: [ get-template-repo ]
+    if: ${{ github.repository != needs.get-template-repo.outputs.template_repo }}
+    uses: LeaLearnsToCode/.github-actions/.github/workflows/base-sync-with-template.yml@main
+    env:
+      BASE_BRANCH: main
+      HEAD_BRANCH: chore/sync-from-template
+      GIT_AUTHOR_NAME: ${{ github.repository_owner }}
+      GIT_AUTHOR_EMAIL: ${{ github.repository_owner }}@users.noreply.github.com
+      THIS_REPO: ${{ github.repository }}
+    with:
+      template_repo: ${{ needs.get-template-repo.outputs.template_repo }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
