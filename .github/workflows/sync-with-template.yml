@@ -39,7 +39,7 @@ jobs:
       - name: Load .gittemplate
         id: template
         run: |
-          echo "template_repo=$(sed -e 's/^#.*$//g' .gittemplate | grep -v '^$') >> "$GITHUB_OUTPUT"
+          echo "template_repo=$(sed -e 's/^#.*$//g' .gittemplate | grep -v '^$')" >> "$GITHUB_OUTPUT"
 
   sync-from-template:
     name: Sync changes from ${{ needs.get-template-repo.outputs.template_repo }}
