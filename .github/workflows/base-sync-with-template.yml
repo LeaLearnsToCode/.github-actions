@@ -89,7 +89,7 @@ jobs:
       - name: Get template repo SHA
         id: template_sha
         run: |
-          REV=$(git --git-dir=${{ inputs.template_ref }}/.git rev-parse HEAD)
+          REV=$(git --git-dir=${{ inputs.template_repo }}/.git rev-parse HEAD)
           echo "REV=$REV" >> $GITHUB_OUTPUT
 
       - name: Commit changes, if any
