@@ -18,7 +18,10 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
-          sed -e 's/^#.*$//g' .github/super-linter.env | grep -v "^$" >> "$GITHUB_ENV"
+          #SC1072:error:2:1: Expected end of double quoted string. Fix any mentioned problems and try again [shellcheck]
+          #SC1073:error:1:80: Couldn't parse this double quoted string. Fix to allow more checks [shellcheck]
+          #SC1009:info:1:1: The mentioned syntax error was in this simple command [shellcheck]
+          sed -e 's/^#.*$//g' .github/super-linter.env | grep -v '^$' >> $GITHUB_ENV
 
       - name: Lint Code Base
         uses: github/super-linter@v4
