@@ -86,6 +86,12 @@ jobs:
           done
           git -C "${THIS_REPO}" diff
 
+      - name: Get template repo SHA
+        id: template_sha
+        run: |
+          REV=$(git --git-dir=${{ inputs.template_ref }}/.git rev-parse HEAD)
+          echo "REV=$REV" >> $GITHUB_OUTPUT
+
       - name: Commit changes, if any
         id: commit
         continue-on-error: true
@@ -95,7 +101,7 @@ jobs:
             user.email "${GIT_AUTHOR_EMAIL}"
           git -C "${THIS_REPO}" add .
           git -C "${THIS_REPO}" commit \
-            -m "Sync from ${{ inputs.template_repo }}@${{ github.sha }}"
+            -m "Sync from ${{ inputs.template_repo }}@${{ steps.template_sha.outputs.REV }}"
 
       - name: Push topic branch
         if: steps.commit.outcome == 'success'
