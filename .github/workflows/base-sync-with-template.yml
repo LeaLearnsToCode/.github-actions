@@ -63,7 +63,7 @@ jobs:
 
       - name: Copy template contents
         run: |
-          _files="$(find ${REPO_TEMPLATE} \
+          _files="$(find "${REPO_TEMPLATE}" \
             ! -path "*/.git/*" \
             ! -path "*/.github/workflows/*" \
             ! -name ".gitignore" \
@@ -85,16 +85,16 @@ jobs:
         id: commit
         continue-on-error: true
         run: |
-          git -C ${THIS_REPO} config user.name "${GIT_AUTHOR_NAME}"
-          git -C ${THIS_REPO} config \
+          git -C "${THIS_REPO}" config user.name "${GIT_AUTHOR_NAME}"
+          git -C "${THIS_REPO}" config \
             user.email "${GIT_AUTHOR_EMAIL}"
-          git -C ${THIS_REPO} add .
-          git -C ${THIS_REPO} commit \
+          git -C "${THIS_REPO}" add .
+          git -C "${THIS_REPO}" commit \
             -m "Sync from ${{ inputs.template_repo }}@${{ github.sha }}"
 
       - name: Push topic branch
         if: steps.commit.outcome == 'success'
-        run: git -C ${THIS_REPO} push -u origin "${HEAD_BRANCH}"
+        run: git -C "${THIS_REPO}" push -u origin "${HEAD_BRANCH}"
 
       - name: Create pull request
         continue-on-error: true
