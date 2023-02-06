@@ -66,6 +66,7 @@ jobs:
           _files="$(find "${{ inputs.template_repo }}" \
             ! -path "*/.git/*" \
             ! -name ".gitignore" \
+            ! -name ".gittemplate" \
             ! -name "README.md" \
             -type f \
             -print)"
